@@ -7,11 +7,18 @@
 import express from 'express'; // <-- Module Style import
 import bodyParser from 'body-parser';
 
+
 // Importing user route
 import router from './routes/users.js';
 // const router = require('router')
 
 // const bodyParser = require('body-parser')
+import mongoose from 'mongoose';
+
+//const mongoose = require('mongoose');
+
+mongoose.connect("mongodb+srv://zoya:1234@cluster0.xjd6so3.mongodb.net/firstDB?retryWrites=true&w=majority")
+//app.use(express.json());
 
 const app = express()
 const port = 3001
@@ -35,5 +42,5 @@ app.post('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Server is running on the ${port} nya~`)
 })
