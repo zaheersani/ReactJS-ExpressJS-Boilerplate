@@ -6,7 +6,7 @@
 //const express = require('express')
 import express from 'express'; // <-- Module Style import
 import bodyParser from 'body-parser';
-
+import userModel from './models/users.js';
 
 // Importing user route
 import router from './routes/users.js';
@@ -36,10 +36,32 @@ app.get('/todos', (req, res) => {
     res.send('A list of todo items will be returned')
 })
 
-app.post('/', (req, res) => {
-    console.log(req.body)
-    res.send('Posting a Request')
-})
+app.get("/getUsers", (req, res) => {
+    userModel.find({}, (err,result) => {
+        if(err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// app.post('/', (req, res) => {
+//     console.log(req.body)
+//     res.send('Posting a Request')
+// })
+
+app.post("/createUser", async (req, res) => {
+    const user = req.body;
+    const newUser = new userModel(user);
+    await newUser.save();
+
+    //Send back the user data
+    res.json(user);
+
+});
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on the ${port} nya~`)
