@@ -7,7 +7,7 @@
 import express from 'express'; // <-- Module Style import
 import bodyParser from 'body-parser';
 import userModel from './models/users.js';
-
+import cors from 'cors';
 // Importing user route
 import router from './routes/users.js';
 // const router = require('router')
@@ -24,17 +24,11 @@ const app = express()
 const port = 3001
 //This is being tested
 
-app.use(bodyParser.json())
+//app.use(bodyParser.json())
+app.use(express.json())
 // Adding a Router
 app.use('/users', router);
-
-app.get('/', (req, res) => {
-    res.send('Hello Universe!')
-})
-
-app.get('/todos', (req, res) => {
-    res.send('A list of todo items will be returned')
-})
+app.use(cors());
 
 app.get("/getUsers", (req, res) => {
     userModel.find({}, (err,result) => {
